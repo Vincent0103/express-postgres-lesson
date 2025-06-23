@@ -9,6 +9,7 @@
     <main>
       <header><h1><%= title %></h1></header>
       <section>
+        <%- include("partials/errors.ejs") %>
         <form action="/new" method="POST">
           <div>
             <label for="username">Username: </label>

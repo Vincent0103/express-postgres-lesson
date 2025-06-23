@@ -1,4 +1,4 @@
-import { body, validateResult } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 const usersController = (() => {
   const usersListGet = (req, res) => {
@@ -18,11 +18,22 @@ const usersController = (() => {
       .isLength({ min: 1, max: 12 }).withMessage(`Username ${lengthErr}`)
   ]
 
-
   const usersCreatePost = [
     validateUsername,
     (req, res) => {
-      const errors = validateResult;
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).render("registerUserDB", {
+          title: "Register user",
+          errors: errors.array(),
+        });
+      }
+
+      console.log(`username to be saved: ${req.body.username}`);
     }
   ];
+
+  return { usersListGet, usersCreateGet, usersCreatePost };
 })();
+
+export default usersController;
