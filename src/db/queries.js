@@ -15,4 +15,8 @@ const getMatchingUsernames = async (stringPattern) => {
   return rows;
 }
 
-export { getAllUsernames, insertUsernames, getMatchingUsernames }
+const deleteUsernames = async () => {
+  await pool.query("TRUNCATE TABLE usernames");
+}
+
+export { getAllUsernames, insertUsernames, getMatchingUsernames, deleteUsernames }

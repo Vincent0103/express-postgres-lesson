@@ -1,5 +1,5 @@
 import { body, query, validationResult } from "express-validator";
-import { getAllUsernames, getMatchingUsernames, insertUsernames } from "../db/queries";
+import { deleteUsernames, getAllUsernames, getMatchingUsernames, insertUsernames } from "../db/queries";
 
 const usersController = (() => {
   const alphaErr = "must only contain letters.";
@@ -60,7 +60,12 @@ const usersController = (() => {
     }
   ];
 
-  return { usersListGet, usersCreateGet, usersCreatePost };
+  const usersDeleteGet = async (req, res) => {
+    await deleteUsernames();
+    res.redirect("/");
+  }
+
+  return { usersListGet, usersCreateGet, usersCreatePost, usersDeleteGet };
 })();
 
 export default usersController;
